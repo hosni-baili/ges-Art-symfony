@@ -1,0 +1,51 @@
+
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h2 class="card-title">Create new Article</h2>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+{{ form_start(form) }}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="articlename">Name</label>
+                    {{ form_widget(form.name,{'attr': {'class': 'form-control','placeholder': 'Article Name','id': 'articlename'}}) }}
+                  </div>
+                  <div class="form-group">
+                    <label for="articlePrix">Prix</label>
+                    {{ form_widget(form.prix,{'attr': {'class': 'form-control','placeholder': '0 DT','id': 'articlePrix'}}) }}
+                  </div>
+                 <div class="form-group">
+                    <label for="articleQuantity">Quantity</label>
+                    {{ form_widget(form.quantity,{'attr': {'class': 'form-control','placeholder': 'Article Quantity','id': 'articleQuantity'}}) }}
+
+                    {# {{ form_widget(form.quantity,{'attr': {'class': 'form-control','placeholder': 'Provider Adress','id': 'articleQuantity'}}) }} #}
+                  </div> 
+                  <div class="form-group">
+                    <label for="articleprovider">Provider</label>
+                    {{ form_widget(form.provider,{'attr': {'class': 'form-control','id': 'articleprovider'}}) }}
+                  
+                  </div>
+
+                  <div class="form-group">
+                    <label for="articleInputFile">Photo</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                         {{ form_errors(form.photo)}}
+                         {{ form_widget(form.photo,{'attr': {'class': 'custom-file-input','type': 'file','id': 'articleInputFile'}}) }}
+                        <label class="custom-file-label" for="articleInputFile">Choisir photo</label>
+                      </div>
+                     
+                    </div>
+                  </div>
+                
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+    <button class="btn btn-success">{{ button_label|default('Aouter') }}</button>
+        <a class="btn btn-info" href="{{ path('provider_index') }}">back to list</a>
+
+                </div>
+{{ form_end(form) }}
+            </div>

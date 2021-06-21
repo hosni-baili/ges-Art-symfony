@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}-Provider index{% endblock %}
+
+{% block body %}{{parent()}}
+ <a class="btn btn-primary" href="{{ path('provider_new') }}" style="margin-bottom:15px">Ajouter nouveau provider</a>
+
+
+         <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Liste des Provider</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+    <table id="example1" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Adress</th>
+                <th>Photo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for provider in providers %}
+            <tr>
+                <td>{{provider.id}}</td>
+                <td>{{provider.name}}</td>
+                <td>{{provider.email}}</td>
+                <td>{{provider.adress}}</td>
+                <td><img src="{{asset('uploads/providers/'~ provider.photo)}}" width="100px"></td>
+                <td>
+                    <a class="btn btn-warning" href="{{path('provider_show', {'id': provider.id}) }}">show</a>
+                    <a class="btn btn-danger" href="{{path('provider_edit', {'id': provider.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                 </div>
+              <!-- /.card-body -->
+            </div>
+
+{% endblock %}
