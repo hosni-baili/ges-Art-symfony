@@ -84,7 +84,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="{{asset('dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle')}}">
+              <img src="{{asset('dist/img/user1-128x128.jpg')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -100,7 +100,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="{{asset('dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3')}}">
+              <img src="{{asset('dist/img/user8-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
@@ -116,7 +116,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="{{asset('dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3')}}">
+              <img src="{{asset('dist/img/user3-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
@@ -204,7 +204,6 @@
           </div>
         </div>
       </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -218,9 +217,10 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            {% block sidebarmenu %}
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{path('provider_index')}}" class="nav-link active">
+                <a href="{{path('provider_index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Provider list</p>
                 </a>
@@ -243,30 +243,23 @@
                   <p>Add article</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{path('sendmail')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>send email</p>
+                </a>
+              </li>
+              <li class="nav-item">
+			        <a href="{{path('cours')}}" class="nav-link">
+				      <i class="far fa-circle nav-icon"></i>
+				      <p>Conversion Devise</p>
+			        </a>
+		          </li>
             </ul>
+            {% endblock %}
           </li>
-
-
- 
-   
-
-
-     
- 
-     
-  
-   
-  
-    
-
-
-
-         
-         
-
-
-
         </ul>
+              
       </nav>
       <!-- /.sidebar-menu -->
     </div>
@@ -302,7 +295,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>555</h3>
+                <h3></h3>
 
                 <p>New provider</p>
               </div>
@@ -319,7 +312,7 @@
               <div class="inner">
                 <h3>{{totalprovider.nbProviders}}</h3>
 
-                <p>Total provider</p>
+                <p>Total providers</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -332,7 +325,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3></h3>
 
                 <p>New article</p>
               </div>
@@ -347,7 +340,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                {# <h3>{{totalarticle.nbArticles}}</h3> #}
+                <h3>{{totalprovider.nbArticles}}</h3>
 
                 <p>Total articles</p>
               </div>
