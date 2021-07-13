@@ -15,9 +15,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{path('provider_new')}}" class="nav-link active">
+                <a href="{{path('provider_new')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add provider</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{path('addAjaxProvider')}}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add provider-ajax</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -41,10 +47,8 @@
             </ul>
             {% endblock %}
 
-{% block body %}
-
 {% block title %}New Provider{% endblock %}
-
+{% block body %}
   <div class="col-md-12">
             <!-- general form elements -->
             <buttom id="btnlist" class="btn btn-success" style="margin:20px">Charger liste providers</buttom>
@@ -99,15 +103,43 @@
                 <!-- /input-group -->
               </div>
               <!-- /.card-body -->
-            </div>
+            
             <!-- /.card -->
             <!-- Horizontal Form -->
         
             <!-- /.card -->
 
-          </div>
+          
           <!--/.col (left) -->
-   
+              <div class="card-body" id="listpro">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Adress</th>
+                        <th>photo</th>
+                {# <th>actions</th> #}
+                      </tr>
+                    </thead>
+                    <tbody id="trprovider">
+         {# {% for provider in providers %} #}
+                      <tr>
+
+                {# <td>
+                    <a class="btn btn-warning" href="{{path('provider_show', {'id': provider.id}) }}">show</a>
+                    <a class="btn btn-danger" href="{{path('provider_edit', {'id': provider.id}) }}">edit</a>
+                </td> #}
+                      </tr>
+        {# {% else %}  #}
+                      {# <tr>
+                        <td colspan="5">no records found</td>
+                      </tr> #}
+        {# {% endfor %} #}
+                    </tbody>
+                </table>
+              </div>
 
     <a href="{{ path('provider_index') }}">back to list</a>
 
@@ -115,12 +147,48 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+
+//debut traitement chargement list  avec ajax
+
+  document.getElementById("listpro").style.visibility="hidden" 
 $('#btnlist').click(function () {
     //alert("Ok");
     $('#blockAdd').toggle();
-
-
+  document.getElementById("listpro").style.visibility="visible";
+$.ajax({
+  url:'/provider/listajax',
+  type: "GET",
+  dataType: "json",
+  data: {
+     },
+  async: true,
+  success: function (res)
+    {
+        res=res["providers"];
+        //$('#providers').text(res);
+        var text = '';
+        var textf = '';
+        for (let i = 0; i < res["length"]; i++) {
+        var n = res[i]["id"];
+        console.log(res[i]["id"].toString());
+        text += '<td>'+res[i]["id"]+'</td><td>'+res[i]["name"]+'</td><td>'+res[i]["email"]+'</td><td>'+res[i]["adress"]+'</td>'+
+                    '<td><img src=\"'+"../uploads/providers/"+res[i]["photo"]+'\" width="100px"></td><td>'+
+                    '<a class="btn btn-warning" href=\"'+"/provider/"+res[i]["id"]+'\">show</a>'+
+                    '<a class="btn btn-danger" href=\"'+"/provider/"+res[i]["id"]+"/edit"+'\">edit</a></td>';
+        text = '<tr>'+text+'</tr>';
+        textf +=text;
+        //console.log(text);
+        text='';
+      }
+        document.getElementById("trprovider").innerHTML = textf;
+        //console.log(document.getElementById("trprovider"));
+        //alert("liste avec succes");
+    }
 });
+});
+//fin traitement list ajax
+
+// debut traitement ajout avec ajax
 $('#add').click(function () {
 var name = document.getElementById("providername").value;
 var email = document.getElementById("provideremail").value;
@@ -131,20 +199,28 @@ $.ajax({
   type: "POST",
   dataType: "json",
   data: {
-       "name": name,
-	   "email": email,
-       "adress":adress
+      "name": name,
+	    "email": email,
+      "adress":adress
      },
   async: true,
   success: function (res)
     {
         console.log(res)
-       // $('#resulat').text(res.resultat);
+      // $('#providers').text(res.providers);
        alert("Ajout avec succès");
        //location.href = '/provider/list';
     }
 });
 });
+//fin traitement ajout avec ajax
+
+//debut traitement show avec ajax
+
+//fin traitement show avec ajax
+
+//debut traitement show avec ajax
+//fin traitement show avec ajax
 });
 </script>
 {% endblock %}

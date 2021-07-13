@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
  * @Route("/provider")
  */
@@ -26,6 +27,36 @@ class ProviderController extends AbstractController
             // 'total'=>$nbreProducts,
         ]);
     }
+
+    private function serializeProgrammer(Provider $provider)
+    {
+        return array(
+            'name' => $provider->getName(),
+            'email' => $provider->getEmail(),
+            'adress' => $provider->getAdress(),
+            'id' => $provider->getId(),
+            'photo' => $provider->getPhoto(),
+        );
+    }
+
+
+        /**
+     * @Route("/listajax", name="listajax", methods={"GET"})
+     */
+    public function indexajax(ProviderRepository $providerRepository): Response
+    {  $providers=$providerRepository->findAll();
+
+        $data = array('providers' => array());
+        foreach ($providers as $provider) {
+            $data['providers'][] = $this->serializeProgrammer($provider);
+        }
+        $response = new Response(json_encode($data), 200);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+
+
 
     /**
      * @Route("/new", name="provider_new", methods={"GET","POST"})
@@ -88,7 +119,7 @@ class ProviderController extends AbstractController
               $provider->setEmail($email);
               $provider->setAdress($adress);
     
-              $provider->setCode(1000);
+              //$provider->setCode(1000);
               $provider->setPhoto("profile.png");
     
               $entityManager = $this->getDoctrine()->getManager();
